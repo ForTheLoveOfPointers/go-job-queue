@@ -5,6 +5,7 @@ import (
 	"for-the-love-of-pointers/job-queue/internal/api/types"
 	"for-the-love-of-pointers/job-queue/internal/api/utils"
 	"net/http"
+	"strconv"
 )
 
 type JobService interface {
@@ -42,5 +43,19 @@ func (h *Handler) CreateJob(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) GetJob(w http.ResponseWriter, r *http.Request) {
+	job_id := r.URL.Query().Get("id")
 
+	_, err := strconv.Atoi(job_id)
+	if err != nil {
+		http.Error(w, "id must be an integer", 400)
+		return
+	}
+
+	job_res, err := h.jobs.GetJob(job_id)
+
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	}
+
+	utils.WriteJSON(w, http.StatusFound, job_res)
 }

@@ -16,8 +16,8 @@ func NewRouter(h *Handler) http.Handler {
 
 	r.Route("/jobs", func(r chi.Router) {
 		r.Post("/", h.CreateJob)
-		r.Get("/{id}", h.GetJob)
 
+		r.Get("/{id}", h.GetJob)
 	})
 
 	return r
