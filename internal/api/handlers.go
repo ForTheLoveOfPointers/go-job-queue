@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"for-the-love-of-pointers/job-queue/internal/api/types"
 	"for-the-love-of-pointers/job-queue/internal/api/utils"
+	"for-the-love-of-pointers/job-queue/internal/jobs"
 	"net/http"
 	"strconv"
 )
@@ -14,10 +15,10 @@ type JobService interface {
 }
 
 type Handler struct {
-	jobs JobService
+	jobs *jobs.Service
 }
 
-func NewHandler(jobs JobService) *Handler {
+func NewHandler(jobs *jobs.Service) *Handler {
 	return &Handler{jobs: jobs}
 }
 

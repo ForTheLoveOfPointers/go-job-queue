@@ -1,10 +1,8 @@
 package types
 
-import "encoding/json"
-
 type CreateJobRequest struct {
-	Type    string          `json:"type"`
-	Payload json.RawMessage `json:"payload"`
+	Type    string `json:"type"`
+	Payload []byte `json:"payload"`
 }
 
 type JobResponse struct {
