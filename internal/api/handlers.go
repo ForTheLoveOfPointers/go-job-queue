@@ -6,7 +6,8 @@ import (
 	"for-the-love-of-pointers/job-queue/internal/api/utils"
 	"for-the-love-of-pointers/job-queue/internal/jobs"
 	"net/http"
-	"strconv"
+
+	"github.com/go-chi/chi/v5"
 )
 
 type JobService interface {
@@ -44,13 +45,7 @@ func (h *Handler) CreateJob(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) GetJob(w http.ResponseWriter, r *http.Request) {
-	job_id := r.URL.Query().Get("id")
-
-	_, err := strconv.Atoi(job_id)
-	if err != nil {
-		http.Error(w, "id must be an integer", 400)
-		return
-	}
+	job_id := chi.URLParam(r, "id")
 
 	job_res, err := h.jobs.GetJob(job_id)
 

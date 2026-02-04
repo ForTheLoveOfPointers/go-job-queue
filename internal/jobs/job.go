@@ -1,7 +1,5 @@
 package jobs
 
-import "encoding/json"
-
 type Status string
 
 const (
@@ -15,7 +13,7 @@ type Job struct {
 	ID      string
 	Type    string
 	Status  Status
-	Payload json.RawMessage
+	Payload []byte
 	Result  any
 	Error   string
 }
