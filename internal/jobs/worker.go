@@ -36,10 +36,12 @@ func (w *WorkerPool) work(ctx context.Context, id int) {
 }
 
 func (w *WorkerPool) process(job *Job, id int) {
-	switch job.Type {
-	case "printer":
-		fmt.Printf("Print job id: %s\n", job.ID)
-	default:
-		fmt.Println("No suitable processing function available yet")
+
+	proc, ok := ProcessorFuncs[job.Type]
+
+	if !ok {
+		fmt.Println("No suitable processing function available for this job type")
 	}
+
+	proc(job)
 }
