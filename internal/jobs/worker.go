@@ -38,10 +38,13 @@ func (w *WorkerPool) work(ctx context.Context, id int) {
 func (w *WorkerPool) process(job *Job, id int) {
 
 	proc, ok := ProcessorFuncs[job.Type]
-
 	if !ok {
 		fmt.Println("No suitable processing function available for this job type")
+		job.Status = StatusFailed
+		return
 	}
 
+	job.Status = StatusRunning
 	proc(job)
+	job.Status = StatusCompleted
 }
