@@ -45,6 +45,7 @@ func (w *WorkerPool) process(job *Job, id int) {
 	}
 
 	job.Status = StatusRunning
-	proc(job)
-	job.Status = StatusCompleted
+	if err := proc(job); err == nil {
+		job.Status = StatusCompleted
+	}
 }
